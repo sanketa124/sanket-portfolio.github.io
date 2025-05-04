@@ -23,6 +23,33 @@ document.addEventListener('DOMContentLoaded', () => {
     showImage(currentIndex);
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll("nav a");
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute("id");
+                const navLink = document.querySelector(`nav a[href="#${id}"]`);
+
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove("text-yellow-400", "font-semibold"));
+                    navLink.classList.add("text-yellow-400", "font-semibold");
+                }
+            });
+        },
+        {
+            threshold: 0.6,
+        }
+    );
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
+
+
 // Initialize Slideshow
 let slideIndex = 1;
 
